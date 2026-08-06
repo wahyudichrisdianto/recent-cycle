@@ -24,7 +24,11 @@ mkdir -p "$ext"
 cp manifest.json "$ext/"
 cp background.js cycle-overlay.js gesture-state.js mru.js "$ext/"
 cp popup.html popup.css popup.js "$ext/"
-cp companion.html companion.css "$ext/"
+cp companion.html companion.css companion.js "$ext/"
+
+mkdir -p "$ext/assets/icons"
+cp assets/icons/*.png "$ext/assets/icons/"
+cp assets/favicon.ico "$ext/assets/"
 
 cp -R native "$ext/native"
 chmod +x "$ext/native/install.sh" "$ext/native/uninstall.sh"

@@ -1,28 +1,36 @@
 :root {
-  color-scheme: dark;
+  color-scheme: light dark;
   font-family: "JetBrains Mono", "SF Mono", "Fira Code", "Roboto Mono", "Consolas", ui-monospace, monospace;
-  --canvas: #090d0f;
-  --panel: #11171a;
-  --panel-strong: #162024;
-  --ink: #f1f5f9;
-  --ink-soft: #cbd5e1;
-  --muted: #64748b;
-  --faint: #475569;
-  --line: #1e2a30;
-  --line-strong: #2c3e47;
-  --green: #22c55e;
-  --green-glow: rgba(34, 197, 94, 0.25);
-  --green-soft: #052e16;
-  --green-border: #14532d;
-  --orange: #f97316;
-  --orange-glow: rgba(249, 115, 22, 0.25);
-  --orange-soft: #451a03;
-  --orange-border: #7c2d12;
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, .4);
-  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, .6), 0 0 12px rgba(34, 197, 94, .04);
-  --shadow-lg: 0 16px 32px -8px rgba(0, 0, 0, .7), 0 0 20px rgba(34, 197, 94, .08);
+  --canvas: light-dark(#eef0ec, #090d0f);
+  --panel: light-dark(#ffffff, #11171a);
+  --panel-strong: light-dark(#e3e7e0, #162024);
+  --ink: light-dark(#1a211d, #f1f5f9);
+  --ink-soft: light-dark(#3f4a44, #cbd5e1);
+  --muted: light-dark(#5f6c63, #64748b);
+  --faint: light-dark(#85918a, #475569);
+  --line: light-dark(#d7dcd4, #1e2a30);
+  --line-strong: light-dark(#c6ccc3, #2c3e47);
+  --green: light-dark(#15803d, #22c55e);
+  --green-glow: light-dark(rgba(21, 128, 61, .18), rgba(34, 197, 94, 0.25));
+  --green-soft: light-dark(#dcf0e2, #052e16);
+  --green-border: light-dark(#bcdcc8, #14532d);
+  --orange: light-dark(#b45309, #f97316);
+  --orange-glow: light-dark(rgba(180, 83, 9, .18), rgba(249, 115, 22, 0.25));
+  --orange-soft: light-dark(#fbe8d4, #451a03);
+  --orange-border: light-dark(#e8c9a6, #7c2d12);
+  --shadow-sm: 0 1px 2px light-dark(rgba(24, 32, 28, .08), rgba(0, 0, 0, .4));
+  --shadow-md: 0 8px 24px -4px light-dark(rgba(24, 32, 28, .12), rgba(0, 0, 0, .6)), 0 0 12px light-dark(rgba(21, 128, 61, .06), rgba(34, 197, 94, .04));
+  --shadow-lg: 0 16px 32px -8px light-dark(rgba(24, 32, 28, .16), rgba(0, 0, 0, .7)), 0 0 20px light-dark(rgba(21, 128, 61, .08), rgba(34, 197, 94, .08));
   --radius: 20px;
   --radius-sm: 12px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 * {
@@ -33,9 +41,9 @@ body {
   min-width: 320px;
   margin: 0;
   background:
-    radial-gradient(circle at 90% 0%, rgba(34, 197, 94, .08), transparent 45%),
-    radial-gradient(circle at 10% 40%, rgba(249, 115, 22, .05), transparent 40%),
-    linear-gradient(180deg, #090d0f 0%, #06090a 100%);
+    radial-gradient(circle at 90% 0%, light-dark(rgba(21, 128, 61, .08), rgba(34, 197, 94, .08)), transparent 45%),
+    radial-gradient(circle at 10% 40%, light-dark(rgba(180, 83, 9, .05), rgba(249, 115, 22, .05)), transparent 40%),
+    var(--canvas);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }

@@ -1,12 +1,22 @@
+<p align="center">
+  <img src="assets/banner.png" alt="Recent Cycle banner" width="100%" />
+</p>
+
+<div align="center">
+  <img src="assets/mainlogo.png" alt="Recent Cycle logo" width="220" />
+</div>
+
 # Recent Cycle
 
-Recent Cycle is the Alt-Tab for your tabs — a small, local-only Manifest V3 Chrome extension that
-cycles through your most recently used tabs with a single shortcut. Fast tap to switch, or hold the
-key to preview and pick. No accounts, no network, no telemetry.
+Alt-Tab for your tabs. A small, local-first Manifest V3 Chrome extension that cycles through your
+most recently used tabs with a single shortcut. Fast tap to switch, or hold the key to preview and
+pick. No accounts, no network, no telemetry.
 
-![license](https://img.shields.io/badge/license-Apache%202.0-blue)
-![version](https://img.shields.io/badge/version-0.1.0-blue)
-![platform](https://img.shields.io/badge/platform-Chrome%20MV3-7a57c9)
+<p align="center">
+  <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License: Apache 2.0" />
+  <img src="https://img.shields.io/badge/version-0.1.0-blue" alt="Version 0.1.0" />
+  <img src="https://img.shields.io/badge/platform-Chrome%20MV3-7a57c9" alt="Platform: Chrome MV3" />
+</p>
 
 ---
 

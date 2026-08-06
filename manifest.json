@@ -4,6 +4,13 @@
   "version": "0.1.0",
   "description": "Switch between your most recently used tabs.",
   "minimum_chrome_version": "127",
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "24": "assets/icons/icon-24.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
   "permissions": [
     "tabs",
     "favicon",
@@ -18,7 +25,12 @@
   },
   "action": {
     "default_title": "Recent Cycle",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "24": "assets/icons/icon-24.png",
+      "32": "assets/icons/icon-32.png"
+    }
   },
   "commands": {
     "cycle-forward": {

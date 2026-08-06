@@ -33,11 +33,43 @@ let latestSnapshot = null;
 let isEditingShortcuts = false;
 let customShortcuts = {};
 
+const themeOptions = document.querySelectorAll(".theme-option");
+
+function applyTheme(mode) {
+  document.documentElement.dataset.theme = mode;
+  themeOptions.forEach((el) => {
+    const active = el.dataset.themeChoice === mode;
+    el.classList.toggle("is-active", active);
+    el.setAttribute("aria-checked", String(active));
+  });
+}
+
 if (typeof chrome !== "undefined" && chrome.storage?.local) {
   chrome.storage.local.get(["customShortcuts"], (res) => {
     if (res?.customShortcuts) {
       customShortcuts = res.customShortcuts;
       if (latestSnapshot) render(latestSnapshot);
+    }
+  });
+
+  chrome.storage.local.get(["theme"], (res) => {
+    const mode = res?.theme === "light" || res?.theme === "dark" ? res.theme : "system";
+    applyTheme(mode);
+  });
+
+  themeOptions.forEach((el) => {
+    el.addEventListener("click", () => {
+      const mode = el.dataset.themeChoice;
+      applyTheme(mode);
+      chrome.storage.local.set({ theme: mode });
+    });
+  });
+
+  chrome.storage.onChanged?.addListener((changes, area) => {
+    if (area === "local" && changes.theme) {
+      const next = changes.theme.newValue;
+      const mode = next === "light" || next === "dark" ? next : "system";
+      applyTheme(mode);
     }
   });
 }
