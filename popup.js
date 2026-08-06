@@ -18,6 +18,7 @@ const activePageTitle = document.querySelector("#active-page-title");
 const activePageHost = document.querySelector("#active-page-host");
 const pageBadge = document.querySelector("#page-badge");
 const tabCount = document.querySelector("#tab-count");
+const platformLabel = document.querySelector("#platform-label");
 const resetShortcutsBtn = document.querySelector("#reset-shortcuts");
 const shortcutForward = document.querySelector("#shortcut-forward");
 const shortcutReverse = document.querySelector("#shortcut-reverse");
@@ -76,7 +77,10 @@ if (typeof chrome !== "undefined" && chrome.storage?.local) {
 
 function setShortcutValue(kbdEl, inputEl, text) {
   if (kbdEl) kbdEl.textContent = text;
-  if (inputEl) inputEl.value = text;
+  if (inputEl) {
+    inputEl.value = text;
+    inputEl.dataset.committed = text;
+  }
 }
 
 function updateShortcutDisplayMode() {
@@ -89,6 +93,9 @@ function updateShortcutDisplayMode() {
   }
   if (resetShortcutsBtn) {
     resetShortcutsBtn.hidden = !isEditingShortcuts;
+  }
+  if (platformLabel) {
+    platformLabel.hidden = isEditingShortcuts;
   }
 }
 
@@ -295,6 +302,7 @@ function renderShortcuts(snapshot) {
   const forwardInput = document.querySelector("#shortcut-forward-input");
   const reverseInput = document.querySelector("#shortcut-reverse-input");
 
+  if (platformLabel) platformLabel.textContent = platform.label;
   setShortcutValue(shortcutForward, forwardInput, forward);
   setShortcutValue(shortcutReverse, reverseInput, reverse);
   if (footerForward) footerForward.textContent = forward;
@@ -582,30 +590,40 @@ if (resetShortcutsBtn) {
   resetShortcutsBtn.addEventListener("click", resetShortcuts);
 }
 
+const MODIFIER_KEYS = new Set(["Alt", "Control", "Shift", "Meta"]);
+
+function modifierSymbols(event) {
+  const platform = platformInfo();
+  const opts = platform.key === "mac"
+    ? { meta: "⌘", ctrl: "⌃", alt: "⌥", shift: "⇧" }
+    : { meta: "Win", ctrl: "Ctrl", alt: "Alt", shift: "⇧" };
+  const parts = [];
+  if (event.metaKey) parts.push(opts.meta);
+  if (event.ctrlKey) parts.push(opts.ctrl);
+  if (event.altKey) parts.push(opts.alt);
+  if (event.shiftKey) parts.push(opts.shift);
+  return parts;
+}
+
 document.querySelectorAll(".shortcut-input").forEach((input) => {
   input.addEventListener("keydown", (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (["Alt", "Control", "Shift", "Meta"].includes(event.key)) {
+    const mods = modifierSymbols(event);
+
+    if (MODIFIER_KEYS.has(event.key)) {
+      input.dataset.pending = "1";
+      input.value = mods.join(" ");
       return;
     }
 
-    const platform = platformInfo();
-    const opts = platform.key === "mac"
-      ? { meta: "⌘", ctrl: "⌃", alt: "⌥", shift: "⇧" }
-      : { meta: "Win", ctrl: "Ctrl", alt: "Alt", shift: "⇧" };
-
-    const parts = [];
-    if (event.metaKey) parts.push(opts.meta);
-    if (event.ctrlKey) parts.push(opts.ctrl);
-    if (event.altKey) parts.push(opts.alt);
-    if (event.shiftKey) parts.push(opts.shift);
-
-    parts.push(normalizeKeyName(event.key));
-    const recorded = parts.join(" ");
-
+    const key = normalizeKeyName(event.key);
+    const recorded = mods.concat([key]).join(" ");
     input.value = recorded;
+    input.dataset.committed = recorded;
+    delete input.dataset.pending;
+
     const cmd = input.dataset.commandName;
     if (cmd) {
       customShortcuts[cmd] = recorded;
@@ -620,6 +638,18 @@ document.querySelectorAll(".shortcut-input").forEach((input) => {
         footerForward.textContent = recorded;
       }
     }
+  });
+
+  input.addEventListener("keyup", (event) => {
+    if (modifierSymbols(event).length === 0) {
+      input.value = input.dataset.committed ?? "";
+      delete input.dataset.pending;
+    }
+  });
+
+  input.addEventListener("blur", () => {
+    input.value = input.dataset.committed ?? "";
+    delete input.dataset.pending;
   });
 });
 
