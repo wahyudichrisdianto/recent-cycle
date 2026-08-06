@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+*.swp
+
+# Node
+node_modules/
+
+# Local tooling & dev config (not distributed)
+.impeccable/
+.sc/
+tools/.chrome4test/
+tools/out/
+*.log
+
+# Planning / brainstorming notes (kept out of version control)
+docs/planning/
+
+# Build output & release artifacts (upload from release/ to GitHub Releases)
+release/
+*.zip
+docs

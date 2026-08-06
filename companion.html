@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recent Cycle · Companion setup</title>
+    <link rel="stylesheet" href="companion.css">
+  </head>
+  <body>
+    <main class="setup-shell">
+      <header class="setup-header">
+        <div class="brand-mark" aria-hidden="true">RC</div>
+        <div>
+          <p class="eyebrow">Recent Cycle / Setup</p>
+          <h1>Choose your coverage</h1>
+          <p class="lede">The extension handles tab switching locally. An optional companion adds physical modifier state where Chrome pages are protected.</p>
+        </div>
+      </header>
+
+      <section class="status-banner">
+        <span class="status-dot" aria-hidden="true"></span>
+        <div>
+          <strong>Browser-only mode is always available</strong>
+          <p>Fast taps work without an install. The companion is only needed for exact hold-to-preview behavior on Chrome UI and New Tab.</p>
+        </div>
+      </section>
+
+      <section class="setup-grid" aria-label="Platform setup">
+        <article class="platform-card platform-card--mac">
+          <div class="card-topline"><span class="platform-label">macOS</span><span class="card-state">Available locally</span></div>
+          <h2>Install the local host</h2>
+          <p>Build and register the Native Messaging host automatically with the 1-line setup script:</p>
+          <div class="shortcut-callout"><code>curl -fsSL https://raw.githubusercontent.com/wahyudichrisdianto/recent-cycle/main/install.sh | bash</code></div>
+          <ol>
+            <li>Run the 1-line installer command in Terminal.</li>
+            <li>Approve Accessibility access when macOS prompts.</li>
+            <li>Already installed the extension? Re-register just the host: <code>... | bash -s -- --companion-only --extension-id &lt;id&gt;</code>.</li>
+            <li>Or manually run <code>./native/install.sh &lt;extension-id&gt;</code>.</li>
+            <li>Set the forward shortcut scope to <strong>Global</strong> in Chrome.</li>
+          </ol>
+        </article>
+
+        <article class="platform-card">
+          <div class="card-topline"><span class="platform-label">Windows / Linux</span><span class="card-state">Extension fallback</span></div>
+          <h2>Use the browser shortcut</h2>
+          <p>Recent Cycle ships platform-aware defaults and keeps the core fast-tap flow local to Chrome.</p>
+          <div class="shortcut-callout"><kbd>Ctrl</kbd><span>+</span><kbd>⇧ 9</kbd><span>forward</span></div>
+          <p class="small-note">Chrome may reserve a combination. Use the shortcut settings link in the extension popup to assign another key.</p>
+        </article>
+      </section>
+
+      <section class="privacy-card">
+        <p class="eyebrow">Privacy boundary</p>
+        <h2>Only the gesture state crosses the bridge</h2>
+        <p>The companion observes Option/Alt, Shift, and Tab state needed for this feature. It does not capture arbitrary characters, tab content, network data, or a keystroke history.</p>
+      </section>
+
+      <footer class="setup-footer">
+        <span>Need a different shortcut?</span>
+        <a href="chrome://extensions/shortcuts">Open Chrome shortcut settings</a>
+      </footer>
+    </main>
+  </body>
+</html>

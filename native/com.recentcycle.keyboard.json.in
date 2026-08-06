@@ -1,0 +1,9 @@
+{
+  "name": "com.recentcycle.keyboard",
+  "description": "Recent Cycle local keyboard-state companion",
+  "path": "__HOST_EXECUTABLE__",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://__EXTENSION_ID__/"
+  ]
+}

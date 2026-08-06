@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Recent Cycle",
+  "version": "0.1.0",
+  "description": "Switch between your most recently used tabs.",
+  "minimum_chrome_version": "127",
+  "permissions": [
+    "tabs",
+    "favicon",
+    "storage",
+    "activeTab",
+    "scripting",
+    "nativeMessaging"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Recent Cycle",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "cycle-forward": {
+      "suggested_key": {
+        "mac": "Option+Tab",
+        "windows": "Ctrl+Shift+9",
+        "linux": "Ctrl+Shift+9"
+      },
+      "description": "Cycle forward through recent tabs"
+    },
+    "cycle-reverse": {
+      "suggested_key": {
+        "mac": "Option+Shift+Tab",
+        "windows": "Ctrl+Shift+0",
+        "linux": "Ctrl+Shift+0"
+      },
+      "description": "Cycle backward through recent tabs (while holding Option)"
+    }
+  }
+}

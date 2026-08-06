@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recent Cycle · Configure</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="popup" aria-label="Recent Cycle">
+      <header class="app-header">
+        <div class="brand-lockup">
+          <span class="brand-kicker">Recent Cycle</span>
+        </div>
+        <div class="header-actions">
+          <div class="view-switcher" role="tablist" aria-label="View mode">
+            <button
+              id="close-recent"
+              class="nav-tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              Config
+            </button>
+            <button
+              id="show-recent"
+              class="nav-tab"
+              type="button"
+              role="tab"
+              aria-controls="recent-section"
+              aria-expanded="false"
+              aria-selected="false"
+            >
+              <span>Recent</span>
+              <span id="tab-count" class="tab-badge-chip">—</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <section id="config-view" class="configure-view" aria-label="Recent Cycle configuration">
+        <section class="context-card" aria-labelledby="context-heading">
+          <div class="context-card__topline">
+            <p class="section-kicker">Active context</p>
+          </div>
+          <div class="context-main">
+            <div id="page-badge" class="context-badge" aria-hidden="true">↯</div>
+            <div class="context-copy">
+              <h2 id="context-heading">Current tab</h2>
+              <p id="active-page-title" class="context-title">Reading the active tab…</p>
+              <p id="active-page-host" class="context-host">Local browser context</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel shortcut-panel" aria-labelledby="shortcut-heading">
+          <div class="panel-heading">
+            <p id="shortcut-heading" class="section-kicker">Shortcuts & Gestures</p>
+            <div class="header-chip-group">
+              <span id="platform-label" class="platform-chip">Desktop</span>
+              <button id="open-shortcuts" class="quiet-button" type="button" title="Configure shortcuts in Chrome">Edit ↗</button>
+            </div>
+          </div>
+          <div class="shortcut-grid">
+            <div class="shortcut-row">
+              <div>
+                <span class="shortcut-label">Forward</span>
+                <span class="shortcut-help">Tap for instant switch · Hold to preview</span>
+              </div>
+              <div class="shortcut-key-wrapper">
+                <kbd id="shortcut-forward" class="shortcut-keys">⌥ Tab</kbd>
+                <input id="shortcut-forward-input" class="shortcut-input" type="text" readonly data-command-name="cycle-forward" value="⌥ Tab" placeholder="Press key..." hidden>
+              </div>
+            </div>
+            <div class="shortcut-row">
+              <div>
+                <span class="shortcut-label">Reverse</span>
+                <span class="shortcut-help">Cycle backward through rotation</span>
+              </div>
+              <div class="shortcut-key-wrapper">
+                <kbd id="shortcut-reverse" class="shortcut-keys">⌥ ⇧ Tab</kbd>
+                <input id="shortcut-reverse-input" class="shortcut-input" type="text" readonly data-command-name="cycle-reverse" value="⌥ ⇧ Tab" placeholder="Press key..." hidden>
+              </div>
+            </div>
+            <div id="shortcut-hold-row" class="shortcut-row">
+              <div>
+                <span class="shortcut-label">All Tabs Cycle</span>
+                <span id="shortcut-hold-help" class="shortcut-help">Preserves hold state on protected Chrome pages</span>
+              </div>
+              <div class="shortcut-key-wrapper">
+                <kbd id="shortcut-hold" class="shortcut-keys">⌥ Hold</kbd>
+                <input id="shortcut-hold-input" class="shortcut-input" type="text" readonly data-command-name="shortcut-hold" value="⌥ Hold" placeholder="Press key..." hidden>
+              </div>
+            </div>
+          </div>
+
+          <section id="shortcut-warning" class="warning" hidden>
+            <span class="warning-icon" aria-hidden="true">!</span>
+            <p id="warning-copy"></p>
+          </section>
+        </section>
+
+        <section id="companion-panel" class="panel companion-panel" aria-labelledby="companion-heading" hidden>
+          <div class="companion-copy">
+            <p id="companion-heading" class="section-kicker">Optional companion</p>
+            <p id="companion-copy">All Tabs Cycle is unavailable on protected Chrome pages until the local companion is installed.</p>
+          </div>
+          <div class="companion-footer">
+            <span id="companion-state" class="companion-state">Browser-only</span>
+            <button id="open-companion-guide" class="quiet-button" type="button">Setup guide</button>
+          </div>
+          <p id="companion-warning" class="inline-warning" hidden></p>
+        </section>
+
+      </section>
+
+      <section id="recent-section" class="recent-view" hidden aria-labelledby="recent-heading">
+        <section class="panel recent-panel">
+          <div class="panel-heading">
+            <p id="recent-heading" class="section-kicker">Recent tabs</p>
+          </div>
+
+          <p id="howto" class="howto" hidden>
+            Keep modifier held. <kbd>Tab</kbd> moves forward, <kbd>⇧ Tab</kbd> moves back, release commits.
+          </p>
+
+          <section id="empty-state" class="empty-state" hidden>
+            <div class="empty-badge" aria-hidden="true">⌕</div>
+            <h3>Single tab active</h3>
+            <p>Open a second tab in this window to activate instant tab rotation.</p>
+          </section>
+
+          <div class="tab-list-wrapper">
+            <div id="tab-indicator" class="tab-indicator" aria-hidden="true"></div>
+            <ol id="tab-list" class="tab-list" aria-label="Recent tabs"></ol>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <span>Tap</span><kbd id="footer-forward">⌥ Tab</kbd>
+          <span class="footer-separator">·</span>
+          <span>Hold</span><kbd>⌥</kbd><span>then</span><kbd>Tab</kbd><span>/</span><kbd>⇧ Tab</kbd>
+        </footer>
+
+        <p id="fallback-hint" class="fallback-hint" hidden>
+          <kbd>Tab</kbd>/<kbd>⇧ Tab</kbd> select · <kbd>Enter</kbd> or release modifier to switch ·
+          <kbd>Esc</kbd> cancels
+        </p>
+      </section>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
