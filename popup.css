@@ -360,19 +360,6 @@ button:focus-visible,
   gap: 6px;
 }
 
-.platform-chip {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  padding: 3px 7px;
-  border-radius: 6px;
-  background: var(--panel-strong);
-  border: 1px solid var(--line-strong);
-  color: var(--ink-soft);
-}
-
 .shortcut-grid {
   display: flex;
   flex-direction: column;
@@ -534,6 +521,16 @@ kbd {
   border-color: var(--green);
   color: var(--green);
   transform: translateY(-1px);
+}
+
+.reset-button {
+  color: var(--muted);
+}
+
+.reset-button:hover,
+.reset-button:focus-visible {
+  border-color: var(--orange-border);
+  color: var(--orange);
 }
 
 /* Appearance / Theme Switcher */

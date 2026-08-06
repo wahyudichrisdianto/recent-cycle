@@ -59,7 +59,7 @@
           <div class="panel-heading">
             <p id="shortcut-heading" class="section-kicker">Shortcuts & Gestures</p>
             <div class="header-chip-group">
-              <span id="platform-label" class="platform-chip">Desktop</span>
+              <button id="reset-shortcuts" class="quiet-button reset-button" type="button" title="Restore default shortcuts" hidden>Reset</button>
               <button id="open-shortcuts" class="quiet-button" type="button" title="Configure shortcuts in Chrome">Edit ↗</button>
             </div>
           </div>
@@ -70,8 +70,8 @@
                 <span class="shortcut-help">Tap for instant switch · Hold to preview</span>
               </div>
               <div class="shortcut-key-wrapper">
-                <kbd id="shortcut-forward" class="shortcut-keys">⌥ Tab</kbd>
-                <input id="shortcut-forward-input" class="shortcut-input" type="text" readonly data-command-name="cycle-forward" value="⌥ Tab" placeholder="Press key..." hidden>
+                <kbd id="shortcut-forward" class="shortcut-keys">⌥ ⇥</kbd>
+                <input id="shortcut-forward-input" class="shortcut-input" type="text" readonly data-command-name="cycle-forward" value="⌥ ⇥" placeholder="Press key..." hidden>
               </div>
             </div>
             <div class="shortcut-row">
@@ -80,8 +80,8 @@
                 <span class="shortcut-help">Cycle backward through rotation</span>
               </div>
               <div class="shortcut-key-wrapper">
-                <kbd id="shortcut-reverse" class="shortcut-keys">⌥ ⇧ Tab</kbd>
-                <input id="shortcut-reverse-input" class="shortcut-input" type="text" readonly data-command-name="cycle-reverse" value="⌥ ⇧ Tab" placeholder="Press key..." hidden>
+                <kbd id="shortcut-reverse" class="shortcut-keys">⌥ ⇧ ⇥</kbd>
+                <input id="shortcut-reverse-input" class="shortcut-input" type="text" readonly data-command-name="cycle-reverse" value="⌥ ⇧ ⇥" placeholder="Press key..." hidden>
               </div>
             </div>
             <div id="shortcut-hold-row" class="shortcut-row">
@@ -134,7 +134,7 @@
           </div>
 
           <p id="howto" class="howto" hidden>
-            Keep modifier held. <kbd>Tab</kbd> moves forward, <kbd>⇧ Tab</kbd> moves back, release commits.
+            Keep modifier held. <kbd>⇥</kbd> moves forward, <kbd>⇧ ⇥</kbd> moves back, release commits.
           </p>
 
           <section id="empty-state" class="empty-state" hidden>
@@ -150,13 +150,13 @@
         </section>
 
         <footer class="footer">
-          <span>Tap</span><kbd id="footer-forward">⌥ Tab</kbd>
+          <span>Tap</span><kbd id="footer-forward">⌥ ⇥</kbd>
           <span class="footer-separator">·</span>
-          <span>Hold</span><kbd>⌥</kbd><span>then</span><kbd>Tab</kbd><span>/</span><kbd>⇧ Tab</kbd>
+          <span>Hold</span><kbd>⌥</kbd><span>then</span><kbd>⇥</kbd><span>/</span><kbd>⇧ ⇥</kbd>
         </footer>
 
         <p id="fallback-hint" class="fallback-hint" hidden>
-          <kbd>Tab</kbd>/<kbd>⇧ Tab</kbd> select · <kbd>Enter</kbd> or release modifier to switch ·
+          <kbd>⇥</kbd>/<kbd>⇧ ⇥</kbd> select · <kbd>Enter</kbd> or release modifier to switch ·
           <kbd>Esc</kbd> cancels
         </p>
       </section>

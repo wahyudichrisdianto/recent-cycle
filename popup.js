@@ -18,7 +18,7 @@ const activePageTitle = document.querySelector("#active-page-title");
 const activePageHost = document.querySelector("#active-page-host");
 const pageBadge = document.querySelector("#page-badge");
 const tabCount = document.querySelector("#tab-count");
-const platformLabel = document.querySelector("#platform-label");
+const resetShortcutsBtn = document.querySelector("#reset-shortcuts");
 const shortcutForward = document.querySelector("#shortcut-forward");
 const shortcutReverse = document.querySelector("#shortcut-reverse");
 const footerForward = document.querySelector("#footer-forward");
@@ -87,6 +87,21 @@ function updateShortcutDisplayMode() {
   if (openShortcuts) {
     openShortcuts.textContent = isEditingShortcuts ? "Done" : "Edit ↗";
   }
+  if (resetShortcutsBtn) {
+    resetShortcutsBtn.hidden = !isEditingShortcuts;
+  }
+}
+
+function resetShortcuts() {
+  customShortcuts = {};
+  if (typeof chrome !== "undefined" && chrome.storage?.local) {
+    void chrome.storage.local.set({ customShortcuts });
+  }
+  isEditingShortcuts = false;
+  if (latestSnapshot) {
+    render(latestSnapshot);
+  }
+  updateShortcutDisplayMode();
 }
 
 function isOptionKey(event) {
@@ -183,6 +198,19 @@ function platformInfo() {
   };
 }
 
+const KEY_GLYPHS = {
+  Tab: "⇥",
+  Space: "Space",
+  Up: "↑",
+  Down: "↓",
+  Left: "←",
+  Right: "→",
+  ArrowUp: "↑",
+  ArrowDown: "↓",
+  ArrowLeft: "←",
+  ArrowRight: "→",
+};
+
 function formatShortcut(shortcut, platform = platformInfo()) {
   if (!shortcut) {
     return "Not set";
@@ -197,7 +225,7 @@ function formatShortcut(shortcut, platform = platformInfo()) {
       if (value === "Command") return "⌘";
       if (value === "MacCtrl") return "⌃";
       if (value === "Control") return "Ctrl";
-      return value;
+      return KEY_GLYPHS[value] ?? value;
     })
     .join(" ");
 }
@@ -267,7 +295,6 @@ function renderShortcuts(snapshot) {
   const forwardInput = document.querySelector("#shortcut-forward-input");
   const reverseInput = document.querySelector("#shortcut-reverse-input");
 
-  if (platformLabel) platformLabel.textContent = platform.label;
   setShortcutValue(shortcutForward, forwardInput, forward);
   setShortcutValue(shortcutReverse, reverseInput, reverse);
   if (footerForward) footerForward.textContent = forward;
@@ -551,6 +578,10 @@ if (openShortcuts) {
   });
 }
 
+if (resetShortcutsBtn) {
+  resetShortcutsBtn.addEventListener("click", resetShortcuts);
+}
+
 document.querySelectorAll(".shortcut-input").forEach((input) => {
   input.addEventListener("keydown", (event) => {
     event.preventDefault();
@@ -561,22 +592,17 @@ document.querySelectorAll(".shortcut-input").forEach((input) => {
     }
 
     const platform = platformInfo();
+    const opts = platform.key === "mac"
+      ? { meta: "⌘", ctrl: "⌃", alt: "⌥", shift: "⇧" }
+      : { meta: "Win", ctrl: "Ctrl", alt: "Alt", shift: "⇧" };
+
     const parts = [];
-    if (event.altKey) parts.push(platform.key === "mac" ? "⌥" : "Alt");
-    if (event.shiftKey) parts.push("⇧");
-    if (event.ctrlKey) parts.push(platform.key === "mac" ? "⌃" : "Ctrl");
-    if (event.metaKey) parts.push(platform.key === "mac" ? "⌘" : "Win");
+    if (event.metaKey) parts.push(opts.meta);
+    if (event.ctrlKey) parts.push(opts.ctrl);
+    if (event.altKey) parts.push(opts.alt);
+    if (event.shiftKey) parts.push(opts.shift);
 
-    let keyName = event.key;
-    if (keyName === "Tab") keyName = "Tab";
-    else if (keyName === " ") keyName = "Space";
-    else if (keyName === "ArrowUp") keyName = "↑";
-    else if (keyName === "ArrowDown") keyName = "↓";
-    else if (keyName === "ArrowLeft") keyName = "←";
-    else if (keyName === "ArrowRight") keyName = "→";
-    else if (keyName.length === 1) keyName = keyName.toUpperCase();
-
-    parts.push(keyName);
+    parts.push(normalizeKeyName(event.key));
     const recorded = parts.join(" ");
 
     input.value = recorded;
@@ -596,6 +622,10 @@ document.querySelectorAll(".shortcut-input").forEach((input) => {
     }
   });
 });
+
+function normalizeKeyName(key) {
+  return KEY_GLYPHS[key] ?? (key.length === 1 ? key.toUpperCase() : key);
+}
 
 function setRecentVisible(visible) {
   recentVisible = visible;
