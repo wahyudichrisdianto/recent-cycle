@@ -2,10 +2,6 @@
   <img src="assets/banner.png" alt="Recent Cycle banner" width="100%" />
 </p>
 
-<div align="center">
-  <img src="assets/mainlogo.png" alt="Recent Cycle logo" width="220" />
-</div>
-
 # Recent Cycle
 
 Alt-Tab for your tabs. A small, local-first Manifest V3 Chrome extension that cycles through your
@@ -14,7 +10,7 @@ pick. No accounts, no network, no telemetry.
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License: Apache 2.0" />
-  <img src="https://img.shields.io/badge/version-0.1.0-blue" alt="Version 0.1.0" />
+  <img src="https://img.shields.io/badge/version-0.1.1-blue" alt="Version 0.1.1" />
   <img src="https://img.shields.io/badge/platform-Chrome%20MV3-7a57c9" alt="Platform: Chrome MV3" />
 </p>
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recent Cycle · Companion setup</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="ui.css">
     <link rel="stylesheet" href="companion.css">
   </head>
   <body>
@@ -18,7 +19,7 @@
         </div>
       </header>
 
-      <section class="status-banner">
+      <section class="status-banner" role="status" aria-label="Current coverage">
         <span class="status-dot" aria-hidden="true"></span>
         <div>
           <strong>Browser-only mode is always available</strong>
@@ -27,7 +28,7 @@
       </section>
 
       <section class="setup-grid" aria-label="Platform setup">
-        <article class="platform-card platform-card--mac">
+        <article class="panel platform-card platform-card--mac">
           <div class="card-topline"><span class="platform-label">macOS</span><span class="card-state">Available locally</span></div>
           <h2>Install the local host</h2>
           <p>Build and register the Native Messaging host automatically with the 1-line setup script:</p>
@@ -41,7 +42,7 @@
           </ol>
         </article>
 
-        <article class="platform-card">
+        <article class="panel platform-card">
           <div class="card-topline"><span class="platform-label">Windows / Linux</span><span class="card-state">Extension fallback</span></div>
           <h2>Use the browser shortcut</h2>
           <p>Recent Cycle ships platform-aware defaults and keeps the core fast-tap flow local to Chrome.</p>
@@ -50,7 +51,7 @@
         </article>
       </section>
 
-      <section class="privacy-card">
+      <section class="panel privacy-card">
         <p class="eyebrow">Privacy boundary</p>
         <h2>Only the gesture state crosses the bridge</h2>
         <p>The companion observes Option/Alt, Shift, and Tab state needed for this feature. It does not capture arbitrary characters, tab content, network data, or a keystroke history.</p>

@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recent Cycle · Configure</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="ui.css">
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
     <main class="popup" aria-label="Recent Cycle">
       <header class="app-header">
         <div class="brand-lockup">
-          <span class="brand-kicker">Recent Cycle</span>
+          <h1 class="brand-kicker">Recent Cycle</h1>
         </div>
         <div class="header-actions">
           <div class="view-switcher" role="tablist" aria-label="View mode">
@@ -20,6 +21,7 @@
               class="nav-tab is-active"
               type="button"
               role="tab"
+              aria-controls="config-view"
               aria-selected="true"
             >
               Config
@@ -30,7 +32,6 @@
               type="button"
               role="tab"
               aria-controls="recent-section"
-              aria-expanded="false"
               aria-selected="false"
             >
               <span>Recent</span>
@@ -40,8 +41,8 @@
         </div>
       </header>
 
-      <section id="config-view" class="configure-view" aria-label="Recent Cycle configuration">
-        <section class="context-card" aria-labelledby="context-heading">
+      <section id="config-view" class="configure-view" role="tabpanel" aria-labelledby="close-recent">
+        <section class="panel context-card" aria-labelledby="context-heading">
           <div class="context-card__topline">
             <p class="section-kicker">Active context</p>
           </div>
@@ -72,7 +73,7 @@
               </div>
               <div class="shortcut-key-wrapper">
                 <kbd id="shortcut-forward" class="shortcut-keys">⌥ ⇥</kbd>
-                <input id="shortcut-forward-input" class="shortcut-input" type="text" readonly data-command-name="cycle-forward" value="⌥ ⇥" placeholder="Press key..." hidden>
+                <input id="shortcut-forward-input" class="shortcut-input" type="text" readonly aria-label="Forward shortcut" data-command-name="cycle-forward" value="⌥ ⇥" placeholder="Press key..." hidden>
               </div>
             </div>
             <div class="shortcut-row">
@@ -82,7 +83,7 @@
               </div>
               <div class="shortcut-key-wrapper">
                 <kbd id="shortcut-reverse" class="shortcut-keys">⌥ ⇧ ⇥</kbd>
-                <input id="shortcut-reverse-input" class="shortcut-input" type="text" readonly data-command-name="cycle-reverse" value="⌥ ⇧ ⇥" placeholder="Press key..." hidden>
+                <input id="shortcut-reverse-input" class="shortcut-input" type="text" readonly aria-label="Reverse shortcut" data-command-name="cycle-reverse" value="⌥ ⇧ ⇥" placeholder="Press key..." hidden>
               </div>
             </div>
             <div id="shortcut-hold-row" class="shortcut-row">
@@ -92,7 +93,7 @@
               </div>
               <div class="shortcut-key-wrapper">
                 <kbd id="shortcut-hold" class="shortcut-keys">⌥ Hold</kbd>
-                <input id="shortcut-hold-input" class="shortcut-input" type="text" readonly data-command-name="shortcut-hold" value="⌥ Hold" placeholder="Press key..." hidden>
+                <input id="shortcut-hold-input" class="shortcut-input" type="text" readonly aria-label="All tabs hold shortcut" data-command-name="shortcut-hold" value="⌥ Hold" placeholder="Press key..." hidden>
               </div>
             </div>
           </div>
@@ -128,10 +129,10 @@
 
       </section>
 
-      <section id="recent-section" class="recent-view" hidden aria-labelledby="recent-heading">
+      <section id="recent-section" class="recent-view" hidden role="tabpanel" aria-labelledby="show-recent">
         <section class="panel recent-panel">
           <div class="panel-heading">
-            <p id="recent-heading" class="section-kicker">Recent tabs</p>
+            <h2 id="recent-heading" class="section-kicker">Recent tabs</h2>
           </div>
 
           <p id="howto" class="howto" hidden>

@@ -96,88 +96,117 @@
         all: initial;
         position: fixed;
         z-index: 2147483647;
-        top: 20px;
-        right: 20px;
-        width: min(390px, calc(100vw - 40px));
-        pointer-events: none;
-        color: #f1f5f9;
-        font-family: "JetBrains Mono", "SF Mono", "Fira Code", "Roboto Mono", "Consolas", ui-monospace, monospace;
+        top: 50%;
+        left: 50%;
+        width: min(380px, calc(100vw - 32px));
+        transform: translate(-50%, -50%);
+        pointer-events: auto;
+        color-scheme: light dark;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI Variable", system-ui, sans-serif;
+        --canvas: light-dark(oklch(96% .012 145), oklch(17% .012 175));
+        --panel: light-dark(oklch(99% .004 145), oklch(22% .014 175));
+        --panel-strong: light-dark(oklch(93.5% .018 145), oklch(26% .018 175));
+        --ink: light-dark(oklch(26% .022 150), oklch(96% .01 150));
+        --ink-soft: light-dark(oklch(39% .025 150), oklch(83% .018 150));
+        --muted: light-dark(oklch(52% .022 150), oklch(68% .018 175));
+        --line: light-dark(oklch(35% .015 150 / .14), oklch(90% .01 150 / .14));
+        --line-strong: light-dark(oklch(35% .015 150 / .22), oklch(90% .01 150 / .22));
+        --green: light-dark(oklch(49% .16 150), oklch(76% .19 150));
+        --green-soft: light-dark(oklch(92% .045 150), oklch(30% .07 150));
+        --green-border: light-dark(oklch(72% .10 150), oklch(54% .13 150));
+        --green-ink: light-dark(oklch(31% .10 150), oklch(92% .08 150));
+        --radius-card: 16px;
+        --radius-sm: 10px;
+        --ease-out: cubic-bezier(.16, 1, .3, 1);
       }
-      * { box-sizing: border-box; }
+      :host([data-theme="light"]) { color-scheme: light; }
+      :host([data-theme="dark"]) { color-scheme: dark; }
+      *, *::before, *::after { box-sizing: border-box; }
+      .overlay-root {
+        color: var(--ink);
+        font-family: inherit;
+      }
+      .section-kicker {
+        display: inline-flex;
+        align-items: center;
+        color: var(--muted);
+        font-family: "JetBrains Mono", "SF Mono", "Fira Code", "Roboto Mono", "Consolas", ui-monospace, monospace;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        line-height: 1.3;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .section-kicker::before { content: "[ "; color: var(--green); }
+      .section-kicker::after { content: " ]"; color: var(--green); }
       .panel {
         overflow: hidden;
-        border: 1px solid rgba(34, 197, 94, .3);
-        border-radius: 22px;
-        background: rgba(11, 17, 20, .96);
-        box-shadow: 0 20px 48px -12px rgba(0, 0, 0, .8), 0 0 20px rgba(34, 197, 94, .12);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        padding: 4px;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-card);
+        background: var(--panel);
+        padding: 14px 16px 10px;
       }
-      .header {
+      .panel-heading {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 12px 14px 10px;
+        gap: 12px;
+        margin-bottom: 10px;
       }
-      .title {
-        color: #22c55e;
-        font-size: 14px;
-        font-weight: 800;
-        letter-spacing: -.02em;
-        text-transform: uppercase;
-      }
-      .hint {
-        color: #64748b;
-        font-size: 10px;
-        font-weight: 500;
-      }
-      .list {
+      .tab-list {
         display: grid;
-        gap: 6px;
-        max-height: min(440px, 58vh);
+        gap: 2px;
+        max-height: min(380px, 58vh);
         margin: 0;
         overflow-y: auto;
-        padding: 0 8px 10px;
+        padding: 0;
         scrollbar-width: none;
         list-style: none;
       }
-      .list::-webkit-scrollbar { display: none; }
-      .row {
+      .tab-list::-webkit-scrollbar { display: none; }
+      .tab-row {
         display: grid;
-        grid-template-columns: 30px minmax(0, 1fr) auto;
+        grid-template-columns: 26px minmax(0, 1fr);
         align-items: center;
-        gap: 10px;
-        min-height: 48px;
-        border: 1px solid #1e2a30;
-        border-radius: 12px;
-        background: #11171a;
-        padding: 8px 10px;
-        transition: all 180ms cubic-bezier(.16, 1, .3, 1);
+        gap: 12px;
+        min-height: 52px;
+        border: 0;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        padding: 9px 10px;
+        width: 100%;
+        color: var(--ink);
+        cursor: pointer;
+        font: inherit;
+        text-align: left;
+        transition: background 160ms var(--ease-out), color 160ms var(--ease-out);
       }
-      .row.selected {
-        border-color: #22c55e;
-        background: #052e16;
-        box-shadow: 0 0 12px rgba(34, 197, 94, .25);
+      .tab-row:hover,
+      .tab-row:focus-visible {
+        outline: none;
+        background: color-mix(in oklch, var(--green) 12%, transparent);
       }
-      .badge {
+      .tab-row.is-selected {
+        background: var(--green);
+      }
+      .tab-badge {
         display: grid;
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
         place-items: center;
-        border-radius: 8px;
-        background: #052e16;
-        border: 1px solid #14532d;
-        color: #22c55e;
-        font-size: 11px;
+        border-radius: 7px;
+        background: var(--panel-strong);
+        color: var(--green-ink);
+        font-family: "JetBrains Mono", "SF Mono", "Fira Code", "Roboto Mono", "Consolas", ui-monospace, monospace;
+        font-size: 12px;
         font-weight: 800;
       }
-      .row.selected .badge {
-        background: #22c55e;
-        color: #041f0e;
-        border-color: #22c55e;
+      .tab-row.is-selected .tab-badge {
+        background: color-mix(in oklch, var(--green-ink) 20%, transparent);
+        color: var(--green-ink);
       }
-      .copy { min-width: 0; }
+      .tab-copy { min-width: 0; }
       .tab-title,
       .tab-host {
         display: block;
@@ -187,56 +216,96 @@
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
       }
       .tab-title {
-        color: #f1f5f9;
-        font-size: 12px;
-        font-weight: 600;
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 650;
       }
-      .row.selected .tab-title {
-        color: #22c55e;
-        font-weight: 700;
+      .tab-row.is-selected .tab-title {
+        color: var(--green-ink);
+        font-weight: 800;
       }
       .tab-host {
-        margin-top: 1px;
-        color: #64748b;
-        font-size: 10px;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
       }
-      .selected-label {
-        border-radius: 5px;
-        background: #052e16;
-        border: 1px solid #14532d;
-        color: #22c55e;
-        font-size: 9px;
+      .tab-row.is-selected .tab-host {
+        color: var(--green-ink);
+      }
+      .footer {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 10px -16px -10px;
+        border-top: 1px solid var(--line);
+        padding: 10px 16px 10px;
+        background: var(--panel-strong);
+        color: var(--muted);
+        font-size: 12px;
+      }
+      kbd {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        border: 1px solid var(--line-strong);
+        border-radius: 6px;
+        padding: 3px 7px;
+        background: var(--panel-strong);
+        color: var(--green-ink);
+        font-family: "JetBrains Mono", "SF Mono", "Fira Code", "Roboto Mono", "Consolas", ui-monospace, monospace;
+        font-size: 12px;
         font-weight: 800;
-        letter-spacing: .06em;
-        padding: 2px 6px;
-        text-transform: uppercase;
+        line-height: 1;
       }
     `;
 
+    const overlayRoot = document.createElement("div");
+    overlayRoot.className = "overlay-root";
+
     const panel = document.createElement("section");
-    panel.className = "panel";
+    panel.className = "panel recent-panel";
     panel.setAttribute("role", "status");
     panel.setAttribute("aria-label", "Recent tabs");
 
-    const header = document.createElement("header");
-    header.className = "header";
+    const panelHeading = document.createElement("div");
+    panelHeading.className = "panel-heading";
 
     const title = document.createElement("span");
-    title.className = "title";
+    title.className = "section-kicker";
     title.textContent = "Recent tabs";
 
-    const hint = document.createElement("span");
-    hint.className = "hint";
-    hint.textContent = "Tab next · ⇧Tab back · release ⌥ to switch";
-
     const list = document.createElement("ol");
-    list.className = "list";
+    list.className = "tab-list";
 
-    header.append(title, hint);
-    panel.append(header, list);
-    root.append(style, panel);
+    const footer = document.createElement("footer");
+    footer.className = "footer";
+    footer.append(
+      document.createTextNode("Tap"),
+      Object.assign(document.createElement("kbd"), { textContent: "⌥ ⇥" }),
+      document.createTextNode("·"),
+      document.createTextNode("Hold"),
+      Object.assign(document.createElement("kbd"), { textContent: "⌥" }),
+      document.createTextNode("then"),
+      Object.assign(document.createElement("kbd"), { textContent: "⇥" }),
+      document.createTextNode("/"),
+      Object.assign(document.createElement("kbd"), { textContent: "⇧ ⇥" }),
+    );
+
+    panelHeading.append(title);
+    panel.append(panelHeading, list, footer);
+    overlayRoot.append(panel);
+    root.append(style, overlayRoot);
     (document.documentElement || document.body).append(host);
     instance.host = host;
+
+    if (typeof chrome !== "undefined" && chrome.storage?.local) {
+      chrome.storage.local.get(["theme"], (res) => {
+        if (res?.theme === "light" || res?.theme === "dark") {
+          host.dataset.theme = res.theme;
+        }
+      });
+    }
 
     return list;
   }
@@ -248,19 +317,21 @@
     let selectedRow = null;
 
     for (const tab of snapshot.tabs ?? []) {
-      const row = document.createElement("li");
-      row.className = "row";
-      row.classList.toggle("selected", Boolean(tab.selected));
+      const item = document.createElement("li");
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "tab-row";
+      row.classList.toggle("is-selected", Boolean(tab.selected));
       if (tab.selected) {
         selectedRow = row;
       }
 
       const badge = document.createElement("span");
-      badge.className = "badge";
+      badge.className = "tab-badge";
       badge.textContent = String(tab.initial || "?");
 
       const copy = document.createElement("span");
-      copy.className = "copy";
+      copy.className = "tab-copy";
 
       const title = document.createElement("span");
       title.className = "tab-title";
@@ -270,13 +341,18 @@
       host.className = "tab-host";
       host.textContent = String(tab.host || "Local tab");
 
-      const selected = document.createElement("span");
-      selected.className = "selected-label";
-      selected.textContent = tab.selected ? "Selected" : "";
-
       copy.append(title, host);
-      row.append(badge, copy, selected);
-      list.append(row);
+      row.append(badge, copy);
+      row.setAttribute("aria-label", `Switch to ${String(tab.title || "Untitled tab")}`);
+      row.addEventListener("click", () => {
+        destroy();
+        void chrome.runtime.sendMessage({
+          type: "ACTIVATE_TAB",
+          tabId: tab.id,
+        }).catch(() => undefined);
+      });
+      item.append(row);
+      list.append(item);
     }
 
     if (selectedRow) {

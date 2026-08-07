@@ -45,6 +45,20 @@ function applyTheme(mode) {
   });
 }
 
+function updateViewTabs(isRecentView) {
+  const tabs = [
+    [closeRecent, !isRecentView],
+    [showRecent, isRecentView],
+  ];
+
+  tabs.forEach(([tab, selected]) => {
+    if (!tab) return;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    tab.classList.toggle("is-active", selected);
+  });
+}
+
 if (typeof chrome !== "undefined" && chrome.storage?.local) {
   chrome.storage.local.get(["customShortcuts"], (res) => {
     if (res?.customShortcuts) {
@@ -413,11 +427,7 @@ function render(snapshot) {
   const isRecentView = cycling || recentVisible;
   configView.hidden = isRecentView;
   recentView.hidden = !isRecentView;
-  showRecent.setAttribute("aria-expanded", String(isRecentView));
-  showRecent.setAttribute("aria-selected", String(isRecentView));
-  showRecent.classList.toggle("is-active", isRecentView);
-  closeRecent.setAttribute("aria-selected", String(!isRecentView));
-  closeRecent.classList.toggle("is-active", !isRecentView);
+  updateViewTabs(isRecentView);
 
   if (fallbackHint) fallbackHint.hidden = !(cycling && snapshot.fallbackSession);
   renderContext(snapshot);
@@ -670,6 +680,23 @@ showRecent.addEventListener("click", () => {
 
 closeRecent.addEventListener("click", () => {
   setRecentVisible(false);
+});
+
+[closeRecent, showRecent].forEach((tab, index, tabs) => {
+  tab.addEventListener("keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? tabs.length - 1
+        : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+    tabs[nextIndex].focus();
+    tabs[nextIndex].click();
+  });
 });
 
 if (openCompanionGuide) {
